@@ -3,6 +3,7 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   CanActivateChild,
+  Route,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -37,6 +38,9 @@ export class AuthentificationGuard
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
+    return this.isLoggedIn();
+  }
+  canLoad(_route: Route) {
     return this.isLoggedIn();
   }
 

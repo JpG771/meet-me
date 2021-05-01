@@ -2,9 +2,13 @@
   "name": "meet-me",
   "version": "0.0.0",
   "scripts": {
+    "bootstrap": "netlify dev:exec node ./scripts/bootstrap-fauna-database.js",
     "ng": "ng",
-    "start": "ng serve",
+    "start": "netlify dev",
+    "start:server": "netlify dev serve functions",
+    "prebuild": "echo 'setup faunaDB' && npm run bootstrap",
     "build": "ng build",
+    "build:server": "netlify dev build functions",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -23,6 +27,7 @@
     "@angular/platform-browser": "~11.2.12",
     "@angular/platform-browser-dynamic": "~11.2.12",
     "@angular/router": "~11.2.12",
+    "faunadb": "^4.2.0",
     "gotrue-js": "^0.9.29",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
@@ -42,9 +47,18 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "netlify-cli": "^3.23.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.1.5"
+  },
+  "proxy": {
+    "/.netlify/functions": {
+      "target": "http://localhost:9000",
+      "pathRewrite": {
+        "^/\\.netlify/functions": ""
+      }
+    }
   }
 }
