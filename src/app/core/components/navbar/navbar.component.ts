@@ -4,7 +4,9 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
 } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from 'src/environments/environment';
+import { AlertService } from '../../services/alert.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,8 +16,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   private identity: any;
+  isProduction = environment.production;
 
-  constructor(private _snackBar: MatSnackBar) {}
+  constructor(
+    private alertService: AlertService,
+    public userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.identity = (window as any).netlifyIdentity;
@@ -33,7 +39,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (this.identity) {
       this.identity.open();
     } else {
-      this._snackBar.open(
+      this.alertService.showError(
         `Le composant de conexion ne s'est pas initialiser correctement.`
       );
     }
@@ -41,8 +47,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   private registerIdentityEvents() {
     this.identity.on('init', (user: any) => console.log('init', user));
-    this.identity.on('login', (user: any) => console.log('login', user));
-    this.identity.on('logout', () => console.log('Logged out'));
+    this.identity.on('login', (user: any) => {
+      console.log('login', user);
+      this.userService.currentUser = user;
+    });
+    this.identity.on('logout', () => {
+      console.log('Logged out');
+      this.userService.currentUser = undefined;
+    });
     this.identity.on('error', (err: any) => console.error('Error', err));
     this.identity.on('open', () => console.log('Widget opened'));
     this.identity.on('close', () => console.log('Widget closed'));

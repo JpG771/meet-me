@@ -6,7 +6,7 @@ import { MeetUpdateComponent } from './components/meet-update/meet-update.compon
 
 const routes: Routes = [
   {
-    path: 'list',
+    path: '',
     component: MeetListComponent,
   },
   {

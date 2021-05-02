@@ -14,7 +14,7 @@ export class MeetService {
   }
 
   readAll() {
-    return this.http.get('/.netlify/functions/meet-read-all');
+    return this.http.get<Meet[]>('/.netlify/functions/meet-read-all');
   }
 
   update(data: Meet) {

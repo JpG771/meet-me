@@ -1,7 +1,10 @@
 export interface Meet {
-  id: string;
+  id?: string;
+  title: string;
+  offerType: number;
   type: string;
   user: string;
   dateStart: string;
   dateEnd: string;
+  region: number;
 }

@@ -1,0 +1,22 @@
+.header-image {
+  background-size: contain;
+
+  &.companion {
+    background-image: url('/assets/icons/group.png');
+  }
+  &.cleaning {
+    background-image: url('/assets/icons/cleaning.png');
+  }
+  &.repair {
+    background-image: url('/assets/icons/repair.png');
+  }
+  &.attendant {
+    background-image: url('/assets/icons/wheelchair.png');
+  }
+  &.sport {
+    background-image: url('/assets/icons/sport.png');
+  }
+  &.transport {
+    background-image: url('/assets/icons/car.png');
+  }
+}

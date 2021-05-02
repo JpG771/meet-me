@@ -1,1 +1,4 @@
-<p>meet-list works!</p>
+<button mat-raised-button color="primary" routerLink="nouveau">Nouveau</button>
+<div class="list">
+  <app-meet-view *ngFor="let meet of meets$ | async" [meet]="meet"></app-meet-view>
+</div>

@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
@@ -8,17 +8,13 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthentificationGuard
-  implements OnInit, CanActivate, CanActivateChild {
-  private identity: any;
-
-  ngOnInit(): void {
-    this.identity = (window as any).netlifyIdentity;
-  }
+export class AuthentificationGuard implements CanActivate, CanActivateChild {
+  constructor(private _userService: UserService) {}
 
   canActivate(
     _route: ActivatedRouteSnapshot,
@@ -45,8 +41,6 @@ export class AuthentificationGuard
   }
 
   private isLoggedIn(): boolean {
-    return (
-      this.identity && this.identity.currentUser && this.identity.currentUser()
-    );
+    return !!this._userService.currentUser;
   }
 }

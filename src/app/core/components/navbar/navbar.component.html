@@ -4,13 +4,27 @@
       mat-icon-button
       class="menu"
       aria-label="Menu"
+      [matMenuTriggerFor]="menu"
     >
       <mat-icon>menu</mat-icon>
     </button>
-    <span>Rencontre moi</span>
+    <span class="app-title">Rencontre moi</span>
+    <span *ngIf="!isProduction" class="environment">Devmode</span>
     <span class="spacer"></span>
     <button mat-icon-button class="user" aria-label="Se connecter" (click)="onUserClick()">
       <mat-icon>person</mat-icon>
     </button>
   </mat-toolbar>
 </nav>
+
+<mat-menu #menu="matMenu">
+  <a mat-menu-item routerLink="/">Accueil</a>
+  <ng-container *ngIf="userService.currentUser">
+    <hr>
+    <a mat-menu-item routerLink="/rencontre">Liste de rencontre</a>
+    <a mat-menu-item routerLink="/rencontre/calendrier">Calendrier</a>
+    <hr>
+  </ng-container>
+  <a mat-menu-item routerLink="/contact">Contact</a>
+  <a mat-menu-item routerLink="/legal">Légal</a>
+</mat-menu>

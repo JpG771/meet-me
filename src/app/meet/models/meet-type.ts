@@ -1,4 +1,5 @@
 export interface MeetType {
-  id: string;
+  id?: string;
   name: string;
+  description?: string;
 }

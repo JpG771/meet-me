@@ -1,0 +1,10 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+app-meet-view {
+  display: inline-block;
+  margin: 1em;
+}
