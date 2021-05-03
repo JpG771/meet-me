@@ -10,7 +10,7 @@ exports.handler = (event, context) => {
   const data = JSON.parse(event.body)
   const id = getId(event.path)
   console.log(`Function 'meet-update' invoked. update id: ${id}`)
-  return client.query(q.Update(q.Ref(`classes/meets/${id}`), {data}))
+  return client.query(q.Update(q.Ref(q.Collection(`meets`), id), {data}))
     .then((response) => {
       console.log('success', response)
       return {

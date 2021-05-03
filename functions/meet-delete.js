@@ -10,7 +10,7 @@ exports.handler = async (event, context) => {
   }) 
   const id = getId(event.path)
   console.log(`Function 'meet-delete' invoked. delete id: ${id}`)
-  return client.query(q.Delete(q.Ref(`classes/meets/${id}`)))
+  return client.query(q.Delete(q.Ref(q.Collection(`meets`), id)))
     .then((response) => {
       console.log('success', response)
       return {

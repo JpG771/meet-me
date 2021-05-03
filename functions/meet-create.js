@@ -11,11 +11,11 @@ exports.handler = async (event, context) => {
   /* parse the string body into a useable JS object */
   const data = JSON.parse(event.body)
   console.log('Function `meet-create` invoked', data)
-  const meetItem = {
+  const meetDbItem = {
     data: data
   }
   /* construct the fauna query */
-  return client.query(q.Create(q.Ref('classes/meets'), meetItem))
+  return client.query(q.Create(q.Collection('meets'), meetDbItem))
     .then((response) => {
       console.log('success', response)
       /* Success! return the response with statusCode 200 */

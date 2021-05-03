@@ -25,26 +25,43 @@ if (process.env.FAUNADB_SERVER_SECRET) {
 
 /* idempotent operation */
 function createFaunaDB(key) {
-  console.log('Create the fauna database schema!')
+  console.log('Creating the fauna database schema!')
   const client = new faunadb.Client({
     secret: key
   })
 
   /* Based on your requirements, change the schema here */
-  return client.query(q.Create(q.Ref('classes'), { name: 'meets' }))
+  return client.query(q.CreateDatabase({ name: 'meet-up-db' }))
     .then(() => {
-      return client.query(
-        q.Create(q.Ref('indexes'), {
-          name: 'all_meets',
-          source: q.Ref('classes/meets')
-        }))
+      console.log('Database created!')
     }).catch((e) => {
       // Database already exists
       if (e.requestResult.statusCode === 400 && e.message === 'instance not unique') {
         console.log('Fauna already setup! Good to go')
         console.log('Claim your fauna database with "netlify addons:auth fauna"')
-        throw e
       }
+    })
+    .then(createCollections(client))
+    .then(createIndexes(client))
+}
+
+function createCollections(client) {
+  return client.query(q.CreateCollection({ name: 'meets'}))
+    .then(() => console.log('Collection `meets` created'))
+    .catch((e) => {
+      console.log('Error creating the collection `meets`')
+    })
+}
+
+function createIndexes(client) {
+  return client.query(q.CreateIndex({ 
+      name: 'all_meets',
+      source: q.Collection('meets'),
+      terms: [{ field: ['data', 'dateStart'] }],
+    }))
+    .then(() => console.log('Index `all_meets` created'))
+    .catch((e) => {
+      console.log('Error creating the index `all_meets`')
     })
 }
 
