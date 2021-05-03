@@ -1,5 +1,5 @@
 [build]
-  publish = "dist/"
+  publish = "dist/meet-me"
 
 [functions]
   # Directory with serverless functions, including background functions,
