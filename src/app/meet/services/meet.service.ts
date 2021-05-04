@@ -9,16 +9,16 @@ export class MeetService {
 
   constructor(private http: HttpClient) { }
 
-  create(data: Meet) {
-    return this.http.post('/.netlify/functions/meet-create', data);
-  }
-
   readAll() {
     return this.http.get<Meet[]>('/.netlify/functions/meet-read-all');
   }
 
+  create(data: Meet) {
+    return this.http.post('/.netlify/functions/meet-create', { ...data });
+  }
+
   update(data: Meet) {
-    return this.http.post('/.netlify/functions/meet-create', data);
+    return this.http.post('/.netlify/functions/meet-create', { ...data });
   }
 
   delete(id: string) {

@@ -74,10 +74,10 @@ export class MeetUpdateComponent implements OnInit {
   onSubmit() {
     if (this.meetGroup.valid) {
       const meet: Meet = this.meetGroup.value;
-      meet.user = this.userService.currentUser;
+      meet.user = this.userService.userName;
 
-      const updateMethod = this.meetId ? this.meetService.create : this.meetService.update;
-      updateMethod(meet).subscribe(response => {
+      const updateMethod = this.meetId ? this.meetService.create(meet) : this.meetService.update(meet);
+      updateMethod.subscribe(response => {
         console.log('Saved Meet : ', response);
         this.alertService.showSuccess('La rencontre a été enregistré avec succès.');
       }, error => {

@@ -19,9 +19,10 @@ exports.handler = async (event, context) => {
     .then((response) => {
       console.log('success', response)
       /* Success! return the response with statusCode 200 */
+      const bodyData = { ...response.data, id: response.ref.id }
       return {
         statusCode: 200,
-        body: JSON.stringify(response)
+        body: JSON.stringify(bodyData)
       }
     }).catch((error) => {
       console.log('error', error)
