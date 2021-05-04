@@ -20,6 +20,7 @@ exports.handler = async (event, context) => {
       console.log('success', response)
       /* Success! return the response with statusCode 200 */
       const bodyData = { ...response.data, id: response.ref.id }
+      console.log('body data', bodyData)
       return {
         statusCode: 200,
         body: JSON.stringify(bodyData)

@@ -15,7 +15,6 @@ export class MeetViewComponent implements OnInit {
   constructor(public userService: UserService) { }
 
   ngOnInit(): void {
-    console.log(this.meet);
   }
 
   getAvatarClass() {
@@ -32,4 +31,7 @@ export class MeetViewComponent implements OnInit {
     return {};
   }
 
+  onAnswer() {
+    alert('Pas encore prêt');
+  }
 }

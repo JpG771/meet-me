@@ -22,7 +22,9 @@ exports.handler = (event, context, callback) => {
       return client.query(getAllTodoDataQuery).then((ret) => {
         return {
           statusCode: 200,
-          body: JSON.stringify(ret),
+          body: JSON.stringify(ret.map(meet => {
+            return { ...meet.data, id: meet.ref.id }
+          })),
         };
       });
     })

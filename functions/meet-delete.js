@@ -1,6 +1,5 @@
 /* Import faunaDB sdk */
 const faunadb = require('faunadb')
-const getId = require('./utils/getId')
 const q = faunadb.query
 
 exports.handler = async (event, context) => {
@@ -8,7 +7,7 @@ exports.handler = async (event, context) => {
   const client = new faunadb.Client({
     secret: process.env.FAUNADB_SERVER_SECRET
   }) 
-  const id = getId(event.path)
+  const id = event.body
   console.log(`Function 'meet-delete' invoked. delete id: ${id}`)
   return client.query(q.Delete(q.Ref(q.Collection(`meets`), id)))
     .then((response) => {

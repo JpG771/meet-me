@@ -11,7 +11,7 @@
     <div><b>Région : </b> {{ meet.region }}</div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary">Répondre</button>
-    <button mat-button *ngIf="userService.currentUser === meet.user" [routerLink]="[meet.id]">Modifier</button>
+    <button mat-raised-button color="primary" (click)="onAnswer()">Répondre</button>
+    <button mat-button *ngIf="userService.userName === meet.user" [routerLink]="[meet.id]">Modifier</button>
   </mat-card-actions>
 </mat-card>
