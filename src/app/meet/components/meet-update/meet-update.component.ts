@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
@@ -26,7 +26,8 @@ export class MeetUpdateComponent implements OnInit {
     private meetService: MeetService,
     private userService: UserService,
     private alertService: AlertService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.isProduction = environment.production;
     const currentDate = roundHour(new Date());
@@ -44,7 +45,7 @@ export class MeetUpdateComponent implements OnInit {
       region: new FormControl(16, Validators.required),
 
       user: new FormControl(),
-      id: new FormControl()
+      id: new FormControl(),
     });
     this.meetTypes = [
       'Accompagnateur',
@@ -108,6 +109,25 @@ export class MeetUpdateComponent implements OnInit {
           console.error(error);
           this.alertService.showError(
             `Un problème s'est produit lors de l'enregistrement.`
+          );
+        }
+      );
+    }
+  }
+  onDelete() {
+    if (this.meetId) {
+      this.meetService.delete(this.meetId).subscribe(
+        (response) => {
+          console.log('Meet Deleted: ', response);
+          this.alertService.showSuccess(
+            'La rencontre a été supprimé avec succès.'
+          );
+          this.router.navigate(['.'], { relativeTo: this.activatedRoute.parent });
+        },
+        (error) => {
+          console.error(error);
+          this.alertService.showError(
+            `Un problème s'est produit lors de la suppression.`
           );
         }
       );

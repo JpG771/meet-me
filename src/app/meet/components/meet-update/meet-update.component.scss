@@ -2,6 +2,14 @@
   display: block;
 }
 
+.action-list {
+  max-width: 50em;
+}
+
 button {
   margin-right: 1em;
+}
+
+button.delete {
+  float: right;
 }

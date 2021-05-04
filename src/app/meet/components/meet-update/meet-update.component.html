@@ -46,8 +46,11 @@
     </mat-select>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Enregistrer</button>
-  <button mat-button color="primary" routerLink="..">Annuler</button>
+  <div class="action-list">
+    <button mat-raised-button color="primary" type="submit">Enregistrer</button>
+    <button mat-button color="primary" type="button" routerLink="..">Annuler</button>
+    <button *ngIf="meetId" mat-raised-button type="button" color="warn" class="delete" (click)="onDelete()">Supprimer</button>
+  </div>
 </form>
 
 <pre *ngIf="!isProduction">{{ meetGroup.value | json }}</pre>
