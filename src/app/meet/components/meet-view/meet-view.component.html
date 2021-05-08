@@ -1,17 +1,54 @@
 <mat-card *ngIf="meet" class="card">
   <mat-card-header>
-    <div mat-card-avatar class="header-image" [ngClass]="getAvatarClass()"></div>
+    <div
+      mat-card-avatar
+      class="header-image"
+      [ngClass]="getAvatarClass()"
+    ></div>
     <mat-card-title>{{ meet.title }}</mat-card-title>
     <mat-card-subtitle>{{ meet.type }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <div *ngIf="meet.id"><b>Id : </b> {{ meet.id }}</div>
+    <!-- <div *ngIf="meet.id"><b>Id : </b> {{ meet.id }}</div> -->
+    <div><b>Type : </b> {{ meet.offerType | offerType}}</div>
     <div><b>Personne : </b> {{ meet.user }}</div>
     <div><b>De </b> {{ meet.dateStart }}<b> à </b>{{ meet.dateEnd }}</div>
-    <div><b>Région : </b> {{ meet.region }}</div>
+    <div><b>Région : </b> {{ meet.region | region }}</div>
+    <div *ngIf="meet.responders && meet.responders.length > 0"><b>Répondu par : </b> {{ meet.responders[0].name }}</div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="onAnswer()">Répondre</button>
-    <button mat-button *ngIf="userService.userName === meet.user" [routerLink]="[meet.id]">Modifier</button>
+    <button
+      mat-raised-button
+      *ngIf="
+        !loading &&
+        userService.userName !== meet.user &&
+        (!meet.responders || meet.responders.length === 0)
+      "
+      color="primary"
+      (click)="onAnswer()"
+    >
+      Répondre
+    </button>
+    <button
+      mat-raised-button
+      *ngIf="
+        !loading &&
+        userService.userName !== meet.user &&
+        meet.responders &&
+        meet.responders.length > 0
+      "
+      color="warn"
+      (click)="onCancel()"
+    >
+      Annuler réponse
+    </button>
+    <button
+      mat-button
+      color="primary"
+      *ngIf="userService.userName === meet.user"
+      [routerLink]="[meet.id]"
+    >
+      Modifier
+    </button>
   </mat-card-actions>
 </mat-card>

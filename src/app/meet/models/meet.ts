@@ -1,3 +1,5 @@
+import { Responder } from './responder';
+
 export interface Meet {
   id?: string;
   title: string;
@@ -7,4 +9,7 @@ export interface Meet {
   dateStart: string;
   dateEnd: string;
   region: number;
+  description?: string;
+
+  responders?: Responder[];
 }

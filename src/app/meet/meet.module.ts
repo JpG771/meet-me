@@ -15,6 +15,8 @@ import { MeetViewComponent } from './components/meet-view/meet-view.component';
 import { MeetUpdateComponent } from './components/meet-update/meet-update.component';
 import { MeetHomeComponent } from './containers/meet-home/meet-home.component';
 import { MeetRoutingModule } from './meet.routing';
+import { OfferTypePipe } from './pipes/offer-type.pipe';
+import { RegionPipe } from './pipes/region.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { MeetRoutingModule } from './meet.routing';
     MeetCalendarComponent,
     MeetViewComponent,
     MeetUpdateComponent,
-    MeetHomeComponent
+    MeetHomeComponent,
+    OfferTypePipe,
+    RegionPipe
   ],
   imports: [
     CommonModule,

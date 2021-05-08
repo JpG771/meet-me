@@ -4,7 +4,7 @@ export const dateToString = (date: Date) => {
     date.setUTCHours(date.getHours());
     return date.toISOString().substring(0, 16);
   }
-  return null;
+  return '';
 }
 
 export const roundHour = (date: Date) => {

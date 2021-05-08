@@ -22,7 +22,7 @@ export class AlertService {
   showSuccess(message: string) {
     this.snackBar.open(message, 'OK', {
       panelClass: 'success',
-      duration: 0
+      duration: 2000
     });
   }
 }

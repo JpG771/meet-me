@@ -6,6 +6,7 @@ import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
 
 import { Meet } from '../../models/meet';
+import { regions } from '../../models/region';
 import { MeetService } from '../../services/meet.service';
 import { dateToString, roundHour } from '../../utils/date.utils';
 
@@ -55,25 +56,7 @@ export class MeetUpdateComponent implements OnInit {
       'Sport',
       'Transport',
     ];
-    this.regions = [
-      { code: 1, name: 'Bas-St-Laurent' },
-      { code: 2, name: 'Saguenay-Lac-Saint-Jean' },
-      { code: 3, name: 'Québec' },
-      { code: 4, name: 'Mauricie' },
-      { code: 5, name: 'Estrie' },
-      { code: 6, name: 'Montréal' },
-      { code: 7, name: 'Outaouais' },
-      { code: 8, name: 'Abitibi-Témiscamingue' },
-      { code: 9, name: 'Côte-Nord' },
-      { code: 10, name: 'Nord-du-Quebec' },
-      { code: 11, name: 'Gaspésie-Îles-de-la-Madeleine' },
-      { code: 12, name: 'Chaudière-Appalaches' },
-      { code: 13, name: 'Laval' },
-      { code: 14, name: 'Lanaudière' },
-      { code: 15, name: 'Laurentides' },
-      { code: 16, name: 'Montérégie' },
-      { code: 17, name: 'Centre-du-Québec' },
-    ];
+    this.regions = regions;
     this.activatedRoute.params.subscribe((values) => {
       console.log('Update meet id ', values);
       this.meetId = values.id;
