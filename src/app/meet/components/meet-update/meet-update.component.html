@@ -47,9 +47,13 @@
   </mat-form-field>
 
   <div class="action-list">
-    <button mat-raised-button color="primary" type="submit">Enregistrer</button>
-    <button mat-button color="primary" type="button" routerLink="..">Annuler</button>
-    <button *ngIf="meetId" mat-raised-button type="button" color="warn" class="delete" (click)="onDelete()">Supprimer</button>
+    <button mat-raised-button color="primary" type="submit">
+      <mat-icon>save</mat-icon>Enregistrer</button>
+    <button mat-stroked-button color="primary" type="button" routerLink="..">
+      <mat-icon>keyboard_return</mat-icon>Annuler</button>
+    <div class="spacer">&nbsp;</div>
+    <button *ngIf="meetId" mat-raised-button type="button" color="warn" class="delete" (click)="onDelete()">
+      <mat-icon>delete</mat-icon>Supprimer</button>
   </div>
 </form>
 

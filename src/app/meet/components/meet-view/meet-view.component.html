@@ -27,6 +27,7 @@
       color="primary"
       (click)="onAnswer()"
     >
+      <mat-icon>done</mat-icon>
       Répondre
     </button>
     <button
@@ -40,14 +41,16 @@
       color="warn"
       (click)="onCancel()"
     >
+      <mat-icon>cancel</mat-icon>
       Annuler réponse
     </button>
     <button
-      mat-button
+      mat-stroked-button
       color="primary"
       *ngIf="userService.userName === meet.user"
       [routerLink]="[meet.id]"
     >
+      <mat-icon>edit</mat-icon>
       Modifier
     </button>
   </mat-card-actions>

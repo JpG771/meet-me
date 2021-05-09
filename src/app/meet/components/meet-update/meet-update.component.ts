@@ -6,6 +6,7 @@ import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
 
 import { Meet } from '../../models/meet';
+import { meetTypes } from '../../models/meet-type';
 import { regions } from '../../models/region';
 import { MeetService } from '../../services/meet.service';
 import { dateToString, roundHour } from '../../utils/date.utils';
@@ -19,8 +20,8 @@ import { dateToString, roundHour } from '../../utils/date.utils';
 export class MeetUpdateComponent implements OnInit {
   meetId?: string;
   meetGroup: FormGroup;
-  meetTypes: string[];
-  regions: { code: number; name: string }[];
+  meetTypes = meetTypes;
+  regions = regions;
   isProduction: boolean;
 
   constructor(
@@ -48,15 +49,6 @@ export class MeetUpdateComponent implements OnInit {
       user: new FormControl(),
       id: new FormControl(),
     });
-    this.meetTypes = [
-      'Accompagnateur',
-      'Ménage',
-      'Personne à tout faire',
-      'Préposé',
-      'Sport',
-      'Transport',
-    ];
-    this.regions = regions;
     this.activatedRoute.params.subscribe((values) => {
       console.log('Update meet id ', values);
       this.meetId = values.id;

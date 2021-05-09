@@ -1,15 +1,18 @@
+:host {
+  display: block;
+  padding: 1em;
+}
+
 .mat-form-field {
   display: block;
 }
 
 .action-list {
   max-width: 50em;
+  display: flex;
 }
 
 button {
   margin-right: 1em;
-}
-
-button.delete {
-  float: right;
+  margin-bottom: 1em;
 }

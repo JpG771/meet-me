@@ -1,10 +1,41 @@
-.list {
+.mat-drawer-container {
+  height: 100%;
+}
+
+.filters-container {
+  padding: 1em;
+
+  button {
+    display: block;
+  }
+}
+
+ul {
+  list-style-type: none;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  max-width: 100%;
+  padding-left: 1em;
+
+  li {
+    padding-right: 1em;
+  }
 }
 
 app-meet-view {
   display: inline-block;
   margin: 1em;
+}
+
+.mat-sidenav-content {
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  button {
+    margin-left: 1em;
+    margin-top: 1em;
+  }
 }
