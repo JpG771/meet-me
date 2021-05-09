@@ -12,6 +12,11 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid';
+
 import { MeetListComponent } from './components/meet-list/meet-list.component';
 import { MeetCalendarComponent } from './components/meet-calendar/meet-calendar.component';
 import { MeetViewComponent } from './components/meet-view/meet-view.component';
@@ -20,6 +25,13 @@ import { MeetHomeComponent } from './containers/meet-home/meet-home.component';
 import { MeetRoutingModule } from './meet.routing';
 import { OfferTypePipe } from './pipes/offer-type.pipe';
 import { RegionPipe } from './pipes/region.pipe';
+import { MeetFilterComponent } from './components/meet-filter/meet-filter.component';
+
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  timeGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -29,7 +41,8 @@ import { RegionPipe } from './pipes/region.pipe';
     MeetUpdateComponent,
     MeetHomeComponent,
     OfferTypePipe,
-    RegionPipe
+    RegionPipe,
+    MeetFilterComponent
   ],
   imports: [
     CommonModule,
@@ -45,6 +58,7 @@ import { RegionPipe } from './pipes/region.pipe';
     MatRadioModule,
     MatSelectModule,
     MatSidenavModule,
+    FullCalendarModule,
   ]
 })
 export class MeetModule { }

@@ -14,13 +14,13 @@ const routes: Routes = [
     component: MeetUpdateComponent,
   },
   {
+    path: 'calendrier',
+    component: MeetCalendarComponent,
+  },
+  {
     path: ':id',
     component: MeetUpdateComponent,
   },
-  {
-    path: 'calendrier',
-    component: MeetCalendarComponent,
-  }
 ];
 
 @NgModule({

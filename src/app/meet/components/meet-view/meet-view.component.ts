@@ -8,6 +8,7 @@ import {
 import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Meet } from '../../models/meet';
+import { getMeetTypeClass } from '../../models/meet-type';
 import { Responder } from '../../models/responder';
 import { MeetService } from '../../services/meet.service';
 import { dateToString } from '../../utils/date.utils';
@@ -34,14 +35,7 @@ export class MeetViewComponent implements OnInit {
 
   getAvatarClass() {
     if (this.meet) {
-      return {
-        companion: this.meet.type === 'Accompagnateur',
-        cleaning: this.meet.type === 'Ménage',
-        repair: this.meet.type === 'Personne à tout faire',
-        attendant: this.meet.type === 'Préposé',
-        sport: this.meet.type === 'Sport',
-        transport: this.meet.type === 'Transport',
-      };
+      return getMeetTypeClass(this.meet.type);
     }
     return {};
   }

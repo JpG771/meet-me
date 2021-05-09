@@ -1,1 +1,15 @@
-<p>meet-calendar works!</p>
+<app-meet-filter
+  [listTemplate]="listTemplate"
+  [(sidenavOpened)]="sidenavOpened"
+  (meetsChange)="onMeetsChange($event)"
+></app-meet-filter>
+
+<ng-template #listTemplate>
+  <button mat-raised-button color="primary" (click)="onFilterClick()">
+    <mat-icon>filter_alt</mat-icon>Filtres
+  </button>
+  <button mat-raised-button color="primary" (click)="toggleWeekends()">
+    <mat-icon>date_range</mat-icon>Basculer mois/semaine
+  </button>
+  <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+</ng-template>
