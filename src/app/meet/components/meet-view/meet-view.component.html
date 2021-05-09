@@ -48,7 +48,7 @@
       mat-stroked-button
       color="primary"
       *ngIf="userService.userName === meet.user"
-      [routerLink]="[meet.id]"
+      (click)="onModify()"
     >
       <mat-icon>edit</mat-icon>
       Modifier

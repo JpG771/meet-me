@@ -4,7 +4,10 @@ import {
   ChangeDetectionStrategy,
   Input,
   ChangeDetectorRef,
+  Optional,
 } from '@angular/core';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Router } from '@angular/router';
 import { AlertService } from 'src/app/core/services/alert.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { Meet } from '../../models/meet';
@@ -23,12 +26,15 @@ export class MeetViewComponent implements OnInit {
   @Input() meet?: Meet;
 
   loading = false;
+  from?: string;
 
   constructor(
     public userService: UserService,
+    public changeRef: ChangeDetectorRef,
     private meetService: MeetService,
     private alertService: AlertService,
-    private changeRef: ChangeDetectorRef
+    private router: Router,
+    @Optional() private bottomSheetRef?: MatBottomSheetRef<MeetViewComponent>
   ) {}
 
   ngOnInit(): void {}
@@ -102,6 +108,12 @@ export class MeetViewComponent implements OnInit {
           this.changeRef.markForCheck();
         }
       );
+    }
+  }
+  onModify() {
+    this.router.navigate(['/rencontre', this.meet?.id], { queryParams: { from: this.from }});
+    if (this.bottomSheetRef) {
+      this.bottomSheetRef.dismiss();
     }
   }
 }

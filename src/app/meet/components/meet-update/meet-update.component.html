@@ -49,7 +49,7 @@
   <div class="action-list">
     <button mat-raised-button color="primary" type="submit">
       <mat-icon>save</mat-icon>Enregistrer</button>
-    <button mat-stroked-button color="primary" type="button" routerLink="..">
+    <button mat-stroked-button color="primary" type="button" [routerLink]="from ? from : '..'" [queryParams]="{ view: view}">
       <mat-icon>keyboard_return</mat-icon>Annuler</button>
     <div class="spacer">&nbsp;</div>
     <button *ngIf="meetId" mat-raised-button type="button" color="warn" class="delete" (click)="onDelete()">
