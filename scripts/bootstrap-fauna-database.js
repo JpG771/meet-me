@@ -49,7 +49,17 @@ function createCollections(client) {
   return client.query(q.CreateCollection({ name: 'meets'}))
     .then(() => console.log('Collection `meets` created'))
     .catch((e) => {
-      console.log('Error creating the collection `meets`')
+      console.log('Error creating the collection `meets`', e)
+    })
+    .then(() => client.query(q.CreateCollection({ name: 'messages'})))
+    .then(() => console.log('Collection `messages` created'))
+    .catch((e) => {
+      console.log('Error creating the collection `messages`', e)
+    })
+    .then(() => client.query(q.CreateCollection({ name: 'users'})))
+    .then(() => console.log('Collection `users` created'))
+    .catch((e) => {
+      console.log('Error creating the collection `users`', e)
     })
 }
 
@@ -62,6 +72,15 @@ function createIndexes(client) {
     .then(() => console.log('Index `all_meets` created'))
     .catch((e) => {
       console.log('Error creating the index `all_meets`')
+    })
+    .then(client.query(q.CreateIndex({ 
+      name: 'user_messages',
+      source: q.Collection('messages'),
+      terms: [{ field: ['data', 'toUser'] }],
+    })))
+    .then(() => console.log('Index `user_messages` created'))
+    .catch((e) => {
+      console.log('Error creating the index `user_messages`')
     })
 }
 

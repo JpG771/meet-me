@@ -115,7 +115,7 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
   onSubmit() {
     if (this.meetGroup.valid) {
       const meet: Meet = this.meetGroup.value;
-      meet.user = this.userService.userName;
+      meet.user = this.userService.userName!;
 
       const updateMethod = this.meetId
         ? this.meetService.update(meet)

@@ -14,6 +14,9 @@
     <button mat-icon-button class="user" aria-label="Se connecter" (click)="onUserClick()">
       <mat-icon>person</mat-icon>
     </button>
+    <button *ngIf="userService.currentUser" mat-icon-button class="message" aria-label="Mes messages" routerLink="/messages" [matBadge]="nbMessage" [matBadgeHidden]="nbMessage === 0">
+      <mat-icon>person</mat-icon>
+    </button>
   </mat-toolbar>
 </nav>
 

@@ -2,12 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './components/home/home.component';
+import { MessagesComponent } from './components/messages/messages.component';
 import { AuthentificationGuard } from './guards/authentification.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },
+  {
+    path: 'messages',
+    component: MessagesComponent
   },
   {
     path: 'rencontre',
