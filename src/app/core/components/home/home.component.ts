@@ -13,4 +13,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onBeneficiaryClick() {
+    (window as any).netlifyIdentity.open('signup');
+  }
+
+  onHelperClick() {
+    (window as any).netlifyIdentity.open('signup');
+  }
 }

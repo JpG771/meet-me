@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { FeaturesComponent } from './components/features/features.component';
 import { HomeComponent } from './components/home/home.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { AuthentificationGuard } from './guards/authentification.guard';
@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },
+  {
+    path: 'fonctionnalites',
+    component: FeaturesComponent
   },
   {
     path: 'messages',

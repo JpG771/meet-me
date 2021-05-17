@@ -15,9 +15,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { FeaturesComponent } from './components/features/features.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomeComponent, MessagesComponent],
+  declarations: [AppComponent, NavbarComponent, HomeComponent, MessagesComponent, FeaturesComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

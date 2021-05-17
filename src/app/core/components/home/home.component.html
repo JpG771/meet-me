@@ -1,1 +1,50 @@
-<p>home works!</p>
+<div class="title-section">
+  <h1 class="title">Demander de l'aide ou offrer la à quelqu'un qui en a besoin</h1>
+</div>
+
+<p class="description">
+  Rencontre moi a été créé pour permettre de trouver rapidement du personnels pour des tâches non récurrentes.
+  La personne dans le besoin ajoute ses tâches à une liste ou calendrier.
+  L'aidant peut ensuite trouver les activités qu'il peut combler à l'aider de filtres ou des alertes personnalisées.
+  <!-- <a routerLink="fonctionnalites">Voir la liste complète de fonctionnalités</a> -->
+</p>
+
+<div class="users">
+  <mat-card>
+    <mat-card-header>
+      <div
+        mat-card-avatar
+        class="beneficiary-image"
+      ></div>
+      <mat-card-title>Créer un compte bénéficiaire</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      Demander à quelqu'un de vous aider ou de participer à une activité.
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="accent" (click)="onBeneficiaryClick()">
+        <mat-icon>done</mat-icon>
+        Créer mon compte bénéficiaire
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <div
+        mat-card-avatar
+        class="helper-image"
+      ></div>
+      <mat-card-title>Créer un compte aidant</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      Aider votre prochain et faites vous de l'argent de poche.
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="accent" (click)="onHelperClick()">
+        <mat-icon>done</mat-icon>
+        Créer mon compte bénéficiaire
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
