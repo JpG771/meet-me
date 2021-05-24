@@ -1,6 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { AppDataService } from 'src/app/core/services/app-data.service';
+import { UserDetailService } from 'src/app/core/services/user-detail.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { Meet } from '../../models/meet';
 import { meetTypes } from '../../models/meet-type';
 import { regions } from '../../models/region';
@@ -9,10 +20,9 @@ import { MeetService } from '../../services/meet.service';
 @Component({
   selector: 'app-meet-filter',
   templateUrl: './meet-filter.component.html',
-  styleUrls: ['./meet-filter.component.scss']
+  styleUrls: ['./meet-filter.component.scss'],
 })
 export class MeetFilterComponent implements OnInit {
-
   @Input() listTemplate: TemplateRef<any> | null = null;
   @Input() sidenavOpened: boolean = false;
   @Output() meetsChange = new EventEmitter<Meet[]>();
@@ -28,7 +38,12 @@ export class MeetFilterComponent implements OnInit {
   private _allMeets?: Meet[];
   private _subscriptions: Subscription;
 
-  constructor(private meetService: MeetService) {
+  constructor(
+    private meetService: MeetService,
+    private userService: UserService,
+    private userDetailService: UserDetailService,
+    private appService: AppDataService
+  ) {
     this.meetTypes = meetTypes;
     this.regions = regions;
     this.filters = {};
@@ -91,7 +106,7 @@ export class MeetFilterComponent implements OnInit {
             const startDate = new Date(meet.dateStart);
             const filterStartDate = new Date(value);
             return startDate >= filterStartDate;
-          }
+          };
         } else {
           delete this.filters['dateStart'];
         }
@@ -104,7 +119,7 @@ export class MeetFilterComponent implements OnInit {
             const endDate = new Date(meet.dateEnd);
             const filterEndDate = new Date(value);
             return endDate <= filterEndDate;
-          }
+          };
         } else {
           delete this.filters['dateEnd'];
         }
@@ -136,6 +151,11 @@ export class MeetFilterComponent implements OnInit {
         this.sortByDateStart();
         this.meetsChange.emit(this.meets);
       })
+    );
+    this._subscriptions.add(
+      this.appService.userDetail.subscribe((userDetail) =>
+        this.filterGroup.setValue(userDetail)
+      )
     );
   }
 
@@ -179,6 +199,18 @@ export class MeetFilterComponent implements OnInit {
   onFilterCloseCick() {
     this.sidenavOpened = false;
     this.sidenavOpenedChange.emit(false);
+  }
+  onFilterSave() {
+    this.appService.userDetail.pipe(take(1)).subscribe((userDetail) => {
+      userDetail.autosuggest = this.filterGroup.value;
+
+      if (userDetail.id) {
+        this.userDetailService.update(userDetail);
+      } else if (this.userService.userName) {
+        userDetail.userName = this.userService.userName;
+        this.userDetailService.create(userDetail);
+      }
+    });
   }
 
   get titleControl() {

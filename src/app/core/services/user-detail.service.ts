@@ -12,6 +12,10 @@ export class UserDetailService {
   read(id: string) {
     return this.http.post<UserDetail>('/.netlify/functions/user-read', id);
   }
+  
+  getForUser(user: string) {
+    return this.http.post<UserDetail>('/.netlify/functions/user-get-for-user', user);
+  }
 
   create(data: UserDetail) {
     return this.http.post<UserDetail>('/.netlify/functions/user-create', { ...data });

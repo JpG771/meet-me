@@ -1,5 +1,6 @@
 export interface UserDetail {
   id?: string;
+  userName: string;
   preferences: {
     receiveEmail: boolean;
   },
@@ -8,7 +9,8 @@ export interface UserDetail {
   }
 }
 
-export const getDefaultUserDetail = (): UserDetail => ({
+export const getDefaultUserDetail = (userName: string): UserDetail => ({
+  userName: userName,
   preferences: {
     receiveEmail: false
   } 

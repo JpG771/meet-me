@@ -82,6 +82,15 @@ function createIndexes(client) {
     .catch((e) => {
       console.log('Error creating the index `user_messages`')
     })
+    .then(client.query(q.CreateIndex({ 
+      name: 'user_detail_for_user',
+      source: q.Collection('users'),
+      terms: [{ field: ['data', 'user'] }],
+    })))
+    .then(() => console.log('Index `user_detail` created'))
+    .catch((e) => {
+      console.log('Error creating the index `user_detail`')
+    })
 }
 
 /* util methods */

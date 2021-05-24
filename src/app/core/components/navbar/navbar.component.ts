@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import {
   Component,
   OnInit,
@@ -6,9 +7,11 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { getDefaultUserDetail } from '../../models/user-detail';
 import { AlertService } from '../../services/alert.service';
 import { AppDataService } from '../../services/app-data.service';
 import { MessageService } from '../../services/message.service';
+import { UserDetailService } from '../../services/user-detail.service';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -28,7 +31,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private messageService: MessageService,
     private changeRef: ChangeDetectorRef,
-    public userService: UserService
+    public userService: UserService,
+    private userDetailService: UserDetailService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +63,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       console.log('login', user);
       this.userService.currentUser = user;
       this.loadMessages();
+      this.loadUserDetail();
     });
     this.identity.on('logout', () => {
       console.log('Logged out');
@@ -71,12 +76,40 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   private loadMessages() {
     if (this.userService.userName) {
-      this.messageService.read(this.userService.userName).subscribe(messages => {
-        console.log('Received messages :', messages);
-        this.appDataService.messages.next(messages);
-        this.nbMessage = messages.length;
-        this.changeRef.markForCheck();
-      }, err => { console.log('Could not get messsages', err) })
+      this.messageService.read(this.userService.userName).subscribe(
+        (messages) => {
+          console.log('Received messages :', messages);
+          this.appDataService.messages.next(messages);
+          this.nbMessage = messages.length;
+          this.changeRef.markForCheck();
+        },
+        (error: HttpErrorResponse) => {
+          console.log('Could not get messsages', error);
+        }
+      );
+    }
+  }
+
+  private loadUserDetail() {
+    if (this.userService.userName) {
+      this.userDetailService.getForUser(this.userService.userName).subscribe(
+        (userDetail) => {
+          if (userDetail) {
+            this.appDataService.userDetail.next(userDetail);
+          }
+        },
+        (error: HttpErrorResponse) => {
+          console.log('userDetailService.getForuser error : ', error);
+          if (error.status === 400) {
+            if (this.userService.userName) {
+              const newUserDetail = getDefaultUserDetail(
+                this.userService.userName
+              );
+              this.appDataService.userDetail.next(newUserDetail);
+            }
+          }
+        }
+      );
     }
   }
 }
