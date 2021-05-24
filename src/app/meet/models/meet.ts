@@ -10,6 +10,7 @@ export interface Meet {
   dateEnd: string;
   region: number;
   description?: string;
+  price?: number
 
   responders?: Responder[];
 }
