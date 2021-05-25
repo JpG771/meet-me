@@ -153,8 +153,11 @@ export class MeetFilterComponent implements OnInit {
       })
     );
     this._subscriptions.add(
-      this.appService.userDetail.subscribe((userDetail) =>
-        this.filterGroup.setValue(userDetail)
+      this.appService.userDetail.subscribe((userDetail) => {
+        if (userDetail.autosuggest) {
+          this.filterGroup.patchValue(userDetail.autosuggest);
+        }
+      }
       )
     );
   }
@@ -205,10 +208,25 @@ export class MeetFilterComponent implements OnInit {
       userDetail.autosuggest = this.filterGroup.value;
 
       if (userDetail.id) {
-        this.userDetailService.update(userDetail);
+        this.userDetailService.update(userDetail).subscribe(
+          (response) => {
+            console.log('User detail updated : ', response);
+          },
+          (error) => {
+            console.error('User detail update error : ', error);
+          }
+        );
       } else if (this.userService.userName) {
         userDetail.userName = this.userService.userName;
-        this.userDetailService.create(userDetail);
+        this.userDetailService.create(userDetail).subscribe(
+          (response) => {
+            console.log('User detail created : ', response);
+            this.appService.userDetail.next(response);
+          },
+          (error) => {
+            console.error('User detail creation error : ', error);
+          }
+        );;
       }
     });
   }

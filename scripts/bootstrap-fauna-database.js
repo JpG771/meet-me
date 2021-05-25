@@ -85,7 +85,7 @@ function createIndexes(client) {
     .then(client.query(q.CreateIndex({ 
       name: 'user_detail_for_user',
       source: q.Collection('users'),
-      terms: [{ field: ['data', 'user'] }],
+      terms: [{ field: ['data', 'userName'] }],
     })))
     .then(() => console.log('Index `user_detail` created'))
     .catch((e) => {
