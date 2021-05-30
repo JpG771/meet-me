@@ -21,6 +21,7 @@ export interface MeetType {
 
 export const meetTypes = [
   'Accompagnateur',
+  'Guardien',
   'Ménage',
   'Personne à tout faire',
   'Préposé',
@@ -30,6 +31,7 @@ export const meetTypes = [
 
 export const getMeetTypeClass = (meetType: string): string => {
   if (meetType === 'Accompagnateur') return 'companion';
+  if (meetType === 'Guardien') return 'guard';
   if (meetType === 'Ménage') return 'cleaning';
   if (meetType === 'Personne à tout faire') return 'repair';
   if (meetType === 'Préposé') return 'attendant';
@@ -45,7 +47,7 @@ export const getMeetTypeColor = (meetType: string): string => {
   if (meetType === 'Préposé') return pink700;
   if (meetType === 'Sport') return green700;
   if (meetType === 'Transport') return purple700;
-  return '';
+  return blue700;
 };
 
 export const getMeetTypeColorLight = (meetType: string): string => {
@@ -55,5 +57,5 @@ export const getMeetTypeColorLight = (meetType: string): string => {
   if (meetType === 'Préposé') return pinkA200;
   if (meetType === 'Sport') return greenA200;
   if (meetType === 'Transport') return purpleA100;
-  return '';
+  return blueA200;
 };
