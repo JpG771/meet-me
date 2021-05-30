@@ -1,29 +1,35 @@
-<mat-card *ngFor="let message of messages" class="card">
-  <mat-card-header>
-    <mat-card-title>{{ message.byUser }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <!-- <div *ngIf="message.id"><b>Id : </b> {{ meet.id }}</div> -->
-    {{ message.message }}
-  </mat-card-content>
-  <mat-card-actions>
-    <button
-      mat-raised-button
-      *ngIf="!message.read"
-      color="primary"
-      (click)="markAsRead(message, true)"
-    >
-      <mat-icon>mark_email_read</mat-icon>
-      Marqué lu
-    </button>
-    <button
-      mat-stroked-button
-      *ngIf="message.read"
-      color="primary"
-      (click)="markAsRead(message, false)"
-    >
-      <mat-icon>mark_as_unread</mat-icon>
-      Marqué non lu
-    </button>
-  </mat-card-actions>
-</mat-card>
+<button id="readallbutton" mat-raised-button color="primary" (click)="markAllAsRead()">
+  <mat-icon>mark_email_read</mat-icon>
+  Marqué tous lus
+</button>
+<div class="card-list">
+  <mat-card *ngFor="let message of messages" class="card">
+    <mat-card-header>
+      <mat-card-title>{{ message.byUser }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!-- <div *ngIf="message.id"><b>Id : </b> {{ meet.id }}</div> -->
+      {{ message.message }}
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        *ngIf="!message.read"
+        color="primary"
+        (click)="markAsRead(message, true)"
+      >
+        <mat-icon>mark_email_read</mat-icon>
+        Marqué lu
+      </button>
+      <button
+        mat-stroked-button
+        *ngIf="message.read"
+        color="primary"
+        (click)="markAsRead(message, false)"
+      >
+        <mat-icon>mark_as_unread</mat-icon>
+        Marqué non lu
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

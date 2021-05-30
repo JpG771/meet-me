@@ -43,7 +43,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
     message.read = read;
     this.messageService.update(message).subscribe(
       (response) => {
-        console.log('Message sent : ', response);
+        console.log('Message updated : ', response);
         this.appDataService.messageUpdate.next(this.messages);
         this.changeRef.markForCheck();
       },
@@ -52,5 +52,10 @@ export class MessagesComponent implements OnInit, OnDestroy {
         console.error(error);
       }
     );
+  }
+  markAllAsRead() {
+    this.messages
+      ?.filter((message) => !message.read)
+      .forEach((message) => this.markAsRead(message, true));
   }
 }
