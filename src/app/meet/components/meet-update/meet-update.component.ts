@@ -7,6 +7,8 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Message } from 'src/app/core/models/message';
+import { MessageService } from 'src/app/core/services/message.service';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
@@ -25,6 +27,7 @@ import { dateToString, roundHour } from '../../utils/date.utils';
 })
 export class MeetUpdateComponent implements OnInit, OnDestroy {
   meetId?: string;
+  meet?: Meet;
   meetGroup: FormGroup;
   meetTypes = meetTypes;
   regions = regions;
@@ -38,6 +41,7 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
     private meetService: MeetService,
     private userService: UserService,
     private alertService: AlertService,
+    private messageService: MessageService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {
@@ -65,9 +69,10 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
       console.log('Update meet id ', values);
       this.meetId = values.id;
       if (this.meetId) {
-        this.meetService
-          .read(this.meetId)
-          .subscribe((meet) => this.meetGroup.setValue(meet));
+        this.meetService.read(this.meetId).subscribe((meet) => {
+          this.meetGroup.setValue(meet);
+          this.meet = meet;
+        });
       }
     });
     this._subscriptions.add(
@@ -127,6 +132,21 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
           if (response.id) {
             this.meetId = response.id;
           }
+
+          if (
+            this.meet &&
+            this.meet.responders &&
+            this.meet.responders.length > 0
+          ) {
+            for (const responder of this.meet.responders) {
+              this.sendNotification(
+                responder.name,
+                this.meet,
+                `${this.meet.user} a modifié la rencontre ${this.getMessageTitle()}.`
+              );
+            }
+          }
+
           this.alertService.showSuccess(
             'La rencontre a été enregistré avec succès.'
           );
@@ -148,8 +168,25 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
           this.alertService.showSuccess(
             'La rencontre a été supprimé avec succès.'
           );
+
+          if (
+            this.meet &&
+            this.meet.responders &&
+            this.meet.responders.length > 0
+          ) {
+            for (const responder of this.meet.responders) {
+              this.sendNotification(
+                responder.name,
+                this.meet,
+                `${this.meet.user} a annulé la rencontre ${this.getMessageTitle()}.`
+              );
+            }
+          }
+
           if (this.from) {
-            this.router.navigate([this.from], { queryParams: { view: this.view }});
+            this.router.navigate([this.from], {
+              queryParams: { view: this.view },
+            });
           } else {
             this.router.navigate(['.'], {
               relativeTo: this.activatedRoute.parent,
@@ -164,6 +201,29 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  private sendNotification(toUser: string, meet: Meet, message: string) {
+    const newMessage: Message = {
+      toUser: toUser,
+      byUser: this.userService.userName!,
+      message: message,
+      read: false,
+    };
+    this.messageService.create(newMessage).subscribe(
+      (response) => {
+        console.log('Message sent : ', response);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  private getMessageTitle() {
+    if (this.meet) {
+      return this.meet.title ? this.meet.title : `du ${this.meet.dateStart}` ;
+    }
+    return '';
   }
 
   get titleControl() {

@@ -11,10 +11,24 @@
     <span class="app-title">Rencontre moi</span>
     <span *ngIf="!isProduction" class="environment">Devmode</span>
     <span class="spacer"></span>
-    <button mat-icon-button class="user" aria-label="Se connecter" (click)="onUserClick()">
+    <button
+      mat-icon-button
+      class="user"
+      aria-label="Se connecter"
+      (click)="onUserClick()"
+    >
       <mat-icon>person</mat-icon>
     </button>
-    <button *ngIf="userService.currentUser" mat-icon-button class="message" aria-label="Mes messages" routerLink="/messages" [matBadge]="nbMessage" [matBadgeHidden]="nbMessage === 0">
+    <button
+      *ngIf="userService.currentUser"
+      mat-icon-button
+      class="message"
+      aria-label="Mes messages"
+      routerLink="/messages"
+      [matBadge]="nbMessageNotRead"
+      [matBadgeHidden]="nbMessageNotRead === 0"
+      matBadgeColor="accent"
+    >
       <mat-icon>email</mat-icon>
     </button>
   </mat-toolbar>
@@ -23,10 +37,10 @@
 <mat-menu #menu="matMenu">
   <a mat-menu-item routerLink="/">Accueil</a>
   <ng-container *ngIf="userService.currentUser">
-    <hr>
+    <hr />
     <a mat-menu-item routerLink="/rencontre">Liste de rencontre</a>
     <a mat-menu-item routerLink="/rencontre/calendrier">Calendrier</a>
-    <hr>
+    <hr />
   </ng-container>
   <a mat-menu-item routerLink="/contact">Contact</a>
   <a mat-menu-item routerLink="/legal">Légal</a>

@@ -30,7 +30,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscription = this.appDataService.messages.subscribe((messages) => {
       this.messages = messages;
-      this.changeRef.markForCheck();
+      this.changeRef.detectChanges();
     });
   }
   ngOnDestroy(): void {
@@ -44,6 +44,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.messageService.update(message).subscribe(
       (response) => {
         console.log('Message sent : ', response);
+        this.appDataService.messageUpdate.next(this.messages);
         this.changeRef.markForCheck();
       },
       (error) => {

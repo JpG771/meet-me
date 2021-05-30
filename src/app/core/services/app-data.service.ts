@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { Message } from '../models/message';
 import { UserDetail } from '../models/user-detail';
 
@@ -10,4 +10,5 @@ export class AppDataService {
 
   messages = new ReplaySubject<Message[]>();
   userDetail = new ReplaySubject<UserDetail>();
+  messageUpdate = new Subject<Message[]>();
 }

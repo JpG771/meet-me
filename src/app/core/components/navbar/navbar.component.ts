@@ -5,7 +5,10 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
   ChangeDetectorRef,
+  NgZone,
 } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { getDefaultUserDetail } from '../../models/user-detail';
 import { AlertService } from '../../services/alert.service';
@@ -24,7 +27,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private identity: any;
   isProduction = environment.production;
 
-  nbMessage = 0;
+  nbMessageNotRead = 0;
+
+  private subscription: Subscription;
 
   constructor(
     private appDataService: AppDataService,
@@ -32,8 +37,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private changeRef: ChangeDetectorRef,
     public userService: UserService,
-    private userDetailService: UserDetailService
-  ) {}
+    private userDetailService: UserDetailService,
+    private ngZone: NgZone
+  ) {
+    this.subscription = this.appDataService.messageUpdate.subscribe(messages => {
+      this.nbMessageNotRead = messages.filter(messages => !messages.read).length;
+      this.changeRef.markForCheck();
+    });
+  }
 
   ngOnInit(): void {
     this.identity = (window as any).netlifyIdentity;
@@ -45,6 +56,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (this.identity) this.identity.off('login');
+    this.subscription.unsubscribe();
   }
 
   onUserClick() {
@@ -62,8 +74,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.identity.on('login', (user: any) => {
       console.log('login', user);
       this.userService.currentUser = user;
-      this.loadMessages();
-      this.loadUserDetail();
+      this.ngZone.run(() => {
+        this.loadMessages();
+        this.loadUserDetail();
+      });
     });
     this.identity.on('logout', () => {
       console.log('Logged out');
@@ -80,7 +94,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         (messages) => {
           console.log('Received messages :', messages);
           this.appDataService.messages.next(messages);
-          this.nbMessage = messages.length;
+          this.nbMessageNotRead = messages.filter(messages => !messages.read).length;
           this.changeRef.markForCheck();
         },
         (error: HttpErrorResponse) => {
