@@ -16,7 +16,7 @@ exports.handler = (event, context, callback) => {
       console.log("user found", response);
       return {
         statusCode: 200,
-        body: JSON.stringify(response.data),
+        body: JSON.stringify({ ...response.data, id: response.ref.id }),
       };
     })
     .catch((error) => {
