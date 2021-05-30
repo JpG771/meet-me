@@ -62,6 +62,7 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
       region: new FormControl(16, Validators.required),
       city: new FormControl(),
       price: new FormControl(),
+      description: new FormControl(),
 
       user: new FormControl(),
       id: new FormControl(),
@@ -250,5 +251,8 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
   }
   get priceControl() {
     return this.meetGroup.get('price') as FormControl;
+  }
+  get descriptionControl() {
+    return this.meetGroup.get('description') as FormControl;
   }
 }

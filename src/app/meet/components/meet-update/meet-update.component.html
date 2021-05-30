@@ -1,7 +1,7 @@
 <h1>{{ meetId ? "Modifier" : "Ajouter" }} une rencontre</h1>
 <form [formGroup]="meetGroup" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <mat-label>Titre (Optionnel)</mat-label>
+    <mat-label>Titre</mat-label>
     <input matInput type="text" placeholder="" [formControl]="titleControl" />
   </mat-form-field>
   <mat-radio-group
@@ -58,6 +58,10 @@
       type="number"
       [formControl]="priceControl"
     />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Détails additionnels</mat-label>
+    <textarea matInput rows="5" [formControl]="descriptionControl"></textarea>
   </mat-form-field>
 
   <div class="action-list">

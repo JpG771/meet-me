@@ -17,6 +17,8 @@
     <div *ngIf="meet.city"><b>Ville : </b> {{ meet.city }}</div>
     <div *ngIf="meet.price"><b>Prix : </b> {{ meet.price }}</div>
     <div *ngIf="meet.responders && meet.responders.length > 0"><b>Répondu par : </b> {{ meet.responders[0].name }}</div>
+
+    <ng-container *ngIf="meet.description"><hr>{{ meet.description }}</ng-container>
   </mat-card-content>
   <mat-card-actions>
     <button
