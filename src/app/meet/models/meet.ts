@@ -9,6 +9,7 @@ export interface Meet {
   dateStart: string;
   dateEnd: string;
   region: number;
+  city?: string;
   description?: string;
   price?: number
 

@@ -60,6 +60,7 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
       ),
       dateEnd: new FormControl(dateToString(nextHour), Validators.required),
       region: new FormControl(16, Validators.required),
+      city: new FormControl(),
       price: new FormControl(),
 
       user: new FormControl(),
@@ -70,7 +71,7 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
       this.meetId = values.id;
       if (this.meetId) {
         this.meetService.read(this.meetId).subscribe((meet) => {
-          this.meetGroup.setValue(meet);
+          this.meetGroup.patchValue(meet);
           this.meet = meet;
         });
       }
@@ -243,6 +244,9 @@ export class MeetUpdateComponent implements OnInit, OnDestroy {
   }
   get regionControl() {
     return this.meetGroup.get('region') as FormControl;
+  }
+  get cityControl() {
+    return this.meetGroup.get('city') as FormControl;
   }
   get priceControl() {
     return this.meetGroup.get('price') as FormControl;

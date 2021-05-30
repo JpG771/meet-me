@@ -36,7 +36,6 @@
         <input
           matInput
           type="datetime-local"
-          placeholder="start date"
           [formControl]="dateStartControl"
         />
       </mat-form-field>
@@ -45,7 +44,6 @@
         <input
           matInput
           type="datetime-local"
-          placeholder="start date"
           [formControl]="dateEndControl"
         />
       </mat-form-field>
@@ -57,6 +55,14 @@
             {{ region.name }}
           </mat-option>
         </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Ville</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="cityControl"
+        />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Utilisateur</mat-label>

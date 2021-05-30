@@ -55,6 +55,7 @@ export class MeetFilterComponent implements OnInit {
       dateStart: new FormControl(''),
       dateEnd: new FormControl(),
       region: new FormControl(null),
+      city: new FormControl(),
       user: new FormControl(),
     });
     this.meetTypes.forEach(() => {
@@ -131,6 +132,15 @@ export class MeetFilterComponent implements OnInit {
           this.filters['region'] = (meet: Meet) => meet.region === value;
         } else {
           delete this.filters['region'];
+        }
+      })
+    );
+    this._subscriptions.add(
+      this.cityControl.valueChanges.subscribe((value: string) => {
+        if (value) {
+          this.filters['city'] = (meet: Meet) => !!meet.city && meet.city.toLocaleLowerCase().includes(value.toLocaleLowerCase());
+        } else {
+          delete this.filters['city'];
         }
       })
     );
@@ -248,6 +258,9 @@ export class MeetFilterComponent implements OnInit {
   }
   get regionControl() {
     return this.filterGroup.get('region') as FormControl;
+  }
+  get cityControl() {
+    return this.filterGroup.get('city') as FormControl;
   }
   get userControl() {
     return this.filterGroup.get('user') as FormControl;
